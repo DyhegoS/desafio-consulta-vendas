@@ -27,7 +27,7 @@ public class SaleService {
 	public Page<SaleMinDTO> findAll(String name, String start, String end, Pageable pageable){
 		LocalDate today = LocalDate.parse(start);
 		LocalDate endDate = LocalDate.parse(end);
-		Page<Sale> result = repository.searchReport(name, today, endDate, pageable);
+		Page<Sale> result = repository.searchReportByDateAndName(name, today, endDate, pageable);
         return result.map(x -> new SaleMinDTO(x));
 	}
 }

@@ -12,8 +12,8 @@ import com.devsuperior.dsmeta.entities.Sale;
 public interface SaleRepository extends JpaRepository<Sale, Long> {
 	
 	
-	@Query("SELECT obj.id, obj.amount, obj.date, obj.seller.name "
+	@Query("SELECT obj "
 			+ "FROM Sale obj "
-			+ "WHERE obj.date BETWEEN :start AND :end AND UPPER(obj.seller.name) LIKE UPPER('%', :name, '%')")
-	Page<Sale> searchReport(String name, LocalDate start, LocalDate end, Pageable pageable);
+			+ "WHERE obj.date BETWEEN :start AND :end AND UPPER(obj.seller.name) LIKE UPPER(CONCAT('%', :name, '%'))")
+	Page<Sale> searchReportByDateAndName(String name, LocalDate start, LocalDate end, Pageable pageable);
 }
