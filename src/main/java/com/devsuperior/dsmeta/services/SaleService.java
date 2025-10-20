@@ -1,11 +1,8 @@
 package com.devsuperior.dsmeta.services;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
@@ -23,6 +20,7 @@ public class SaleService {
 		Sale entity = result.get();
 		return new SaleMinDTO(entity);
 	}
+<<<<<<< HEAD
 	
 	public Page<SaleMinDTO> findAll(String name, String start, String end, Pageable pageable){
 		LocalDate today = LocalDate.parse(start);
@@ -30,4 +28,6 @@ public class SaleService {
 		Page<Sale> result = repository.searchReportByDateAndName(name, today, endDate, pageable);
         return result.map(x -> new SaleMinDTO(x));
 	}
+=======
+>>>>>>> parent of bb29e06 (Inicio do desafio)
 }
