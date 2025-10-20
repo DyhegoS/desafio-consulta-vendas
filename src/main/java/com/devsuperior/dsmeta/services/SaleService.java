@@ -1,6 +1,5 @@
 package com.devsuperior.dsmeta.services;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,7 @@ public class SaleService {
 	}
 	
 	public Page<SaleMinDTO> findAll(String name, String start, String end, Pageable pageable){
-		LocalDate today = LocalDate.parse(start);
-		LocalDate endDate = LocalDate.parse(end);
-		Page<Sale> result = repository.searchReport(name, today, endDate, pageable);
+		Page<Sale> result = repository.searchReport(name, start, end, pageable);
         return result.map(x -> new SaleMinDTO(x));
 	}
 }
