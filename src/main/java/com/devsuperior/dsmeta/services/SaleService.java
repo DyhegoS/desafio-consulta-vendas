@@ -27,20 +27,32 @@ public class SaleService {
 	}
 
 	
-	public Page<SaleMinDTO> findAll(String name,String minDate, String maxDate, Pageable pageable){
-		
-		LocalDate startDate = LocalDate.parse(minDate);
-		LocalDate endDate = LocalDate.parse(maxDate);
-		if(minDate == "") {
-			startDate = endDate.minusYears(1L);
-		}
-		
-		if(maxDate == "") {
-			endDate = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
-		}
-		
-		Page<Sale> result = repository.searchByDateAndName(name,startDate, endDate, pageable);
-		return result.map(x -> new SaleMinDTO(x));
+	public Page<SaleMinDTO> findAll(String name, String minDate, String maxDate, Pageable pageable) {
+	    LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+
+	    LocalDate startDate;
+	    LocalDate endDate = LocalDate.parse(maxDate);
+
+	    if ((name == null || name.isBlank()) && (minDate == null || minDate.isBlank()) && (maxDate == null || maxDate.isBlank())) {
+	        LocalDate twelveMonthsAgo = today.minusMonths(12);
+	        Page<Sale> result = repository.searchByLastTwelveMounths(twelveMonthsAgo, pageable);
+	        return result.map(x -> new SaleMinDTO(x));
+	    }
+	    
+	    if (minDate == null || minDate.isBlank()) {
+	        startDate = endDate.minusYears(1L);
+	    }else {
+	    	startDate  = LocalDate.parse(minDate);
+	    }
+
+	    if (maxDate == null || maxDate.isBlank()) {
+	        endDate = today;
+	    }else {
+	    	endDate = LocalDate.parse(maxDate);
+	    }
+
+	    Page<Sale> result = repository.searchByDateAndName(name, startDate, endDate, pageable);
+	    return result.map(x -> new SaleMinDTO(x));
 	}
 
 }

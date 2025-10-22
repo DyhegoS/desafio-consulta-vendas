@@ -31,7 +31,6 @@ public class SaleController {
 													  @RequestParam(name = "minDate", defaultValue = "") String minDate,
 			                                          @RequestParam(name = "maxDate", defaultValue = "") String maxDate,
 			                                          Pageable pageable) {
-		
 		Page<SaleMinDTO> dto = service.findAll(name, minDate, maxDate, pageable);
 		return ResponseEntity.ok(dto);
 	}
