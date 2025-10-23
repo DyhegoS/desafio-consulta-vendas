@@ -31,16 +31,16 @@ public class SaleService {
 	    LocalDate today = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 
 	    LocalDate startDate;
-	    LocalDate endDate = LocalDate.parse(maxDate);
-
+	    LocalDate endDate;
+	    
 	    if ((name == null || name.isBlank()) && (minDate == null || minDate.isBlank()) && (maxDate == null || maxDate.isBlank())) {
 	        LocalDate twelveMonthsAgo = today.minusMonths(12);
 	        Page<Sale> result = repository.searchByLastTwelveMounths(twelveMonthsAgo, pageable);
 	        return result.map(x -> new SaleMinDTO(x));
 	    }
-	    
+
 	    if (minDate == null || minDate.isBlank()) {
-	        startDate = endDate.minusYears(1L);
+	        startDate = today.minusYears(1L);
 	    }else {
 	    	startDate  = LocalDate.parse(minDate);
 	    }
@@ -50,7 +50,7 @@ public class SaleService {
 	    }else {
 	    	endDate = LocalDate.parse(maxDate);
 	    }
-
+	    
 	    Page<Sale> result = repository.searchByDateAndName(name, startDate, endDate, pageable);
 	    return result.map(x -> new SaleMinDTO(x));
 	}
