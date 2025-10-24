@@ -23,6 +23,11 @@ public class SaleMinDTO {
 		date = entity.getDate();
 		sellerName = entity.getSeller().getName();
 	}
+	
+	public SaleMinDTO(String sellerName, Double amount) {
+		this.sellerName = sellerName;
+		this.amount = amount;
+	}
 
 	public Long getId() {
 		return id;
