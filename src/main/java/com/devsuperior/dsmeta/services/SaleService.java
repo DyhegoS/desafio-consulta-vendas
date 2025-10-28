@@ -47,8 +47,8 @@ public class SaleService {
 	    	endDate = LocalDate.parse(maxDate);
 	    }
 	    
-	    Page<SaleMinDTO> result = repository.searchByDateAndName(name, startDate, endDate, pageable);
-	    return result;
+	    Page<Sale> result = repository.searchByDateAndName(name, startDate, endDate, pageable);
+	    return result.map(x -> new SaleMinDTO(x));
 	}
 	
 	public Page<SaleMinDTO> findByLastTwelveMonths(Pageable pageable){
